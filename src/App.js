@@ -9,13 +9,17 @@ import './App.css';
 const itemArray = new Array(9).fill("empty")
 
 const App = () => {
+  const [moves,setMoves] = useState(0)
   const [isCross, setisCross] = useState(true)
   const [winMessage, setwinMessage] = useState("")
+  const [isTie, setisTie] = useState(false)
 
   const reloadGame = () =>{
     setisCross(false);
     setwinMessage("");
     itemArray.fill("empty",0,9)
+    setMoves(0)
+    setisTie(false)
   }
 
 
@@ -76,6 +80,23 @@ const App = () => {
       return toast("Already Filled!!!!",{type: "error"})
     }
     checkIsWinner();
+    gameTie();
+  }
+
+  const gameTie = () => {
+    console.log("aagyaaa")
+    itemArray.forEach(itemNumber => {
+      if(itemArray[itemNumber] !== ''){
+        setMoves(moves+1)
+        console.log(moves);
+
+      }
+    });
+    if (moves === 8) {
+      setisTie(true)
+      return toast("Game Tie", {type: "info"})
+      
+    }
   }
 
   return (
@@ -94,11 +115,25 @@ const App = () => {
                 Reload the game
               </Button>
               </div>
+            ): isTie ? (
+              <div className="mb-2 mt-2" >
+                <Button color="success" block onClick={reloadGame}>
+                  Reload
+                </Button>
+              </div>             
             ) : (
               <h1 className="text-center text-warning">
                 {isCross ? "Cross": "Circle"} turn
               </h1>
-            ) }
+              ) 
+            }
+            {/* {
+              (
+                null
+                ) 
+            } */}
+            
+
             <div className="grid">
               {itemArray.map((item,index)=>(
                 <Card onClick={() => changeItem(index)} >
