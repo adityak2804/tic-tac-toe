@@ -65,8 +65,6 @@ const App = () => {
                   setwinMessage(`${itemArray[2]} wins` )
                 }
   }
-  
-
 
   const changeItem = itemNumber => {
 
